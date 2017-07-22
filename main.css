@@ -40,3 +40,23 @@
 	justify-content: center;
 }
 
+/*Sold Out*/
+
+/*.sold-out {
+	position: relative;
+	top: -400px;
+}*/
+
+/*.sold-out {
+	position: absolute;
+	top: 0;
+}*/
+
+.product {
+	position: relative;
+}
+ .sold-out {
+ 	position: absolute;
+ 	top: 90px;
+ 	z-index: 
+ }
