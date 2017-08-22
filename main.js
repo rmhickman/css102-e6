@@ -1,9 +1,9 @@
 var allProducts = [];
 
 var product1 = {
-	productName: "Mop Attire",
-	imgSrc:"./images/headOrnament.jpg",
-	imgAlt: "Product: Mop Attire",
+	name: "Mop Attire",
+	imagePath:"./images/headOrnament.jpg",
+	imageAlt: "Product: Mop Attire",
 	description: "This is a really good description of our product. It really sells it. It’s the best.",
 	price: 3000,
 	soldOut: false
@@ -52,38 +52,69 @@ allProducts.push(product3);
 allProducts.push(product4);
 allProducts.push(product5);
 
-console.log("All my weird baby products: ", allProducts);
+// console.log("All my weird baby products: ", allProducts);
 var productContainer = document.getElementById("product-container");
-for (var i = 0; i < allProducts.length; i++){
 
-  var currentProduct = allProducts[i];
 
-  var domString = "";
+function buildDomString(product){
+
+	var domString = "";
 
 
 
    domString +=    '<section class="product">';
    domString +=      '<div class="title">'
-   domString +=       '<h2>'+currentProduct.name+'</h2>'
+   domString +=       '<h2>'+product.name+'</h2>'
    domString +=      '</div>'
    domString +=      '<div class="image">'
-   domString +=       '<img src="'+currentProduct.imagePath+'" alt="'+currentProduct.imageAlt+'">'
+   domString +=       '<img src="'+product.imagePath+'" alt="'+product.imageAlt+'">'
    domString +=      '</div>'
    domString +=      '<div class="description">'
-   domString +=       '<p>'+currentProduct.description+'</p>'
-   domString +=       '<h6>'+currentProduct.price+'</h6>'
+   domString +=       '<p>'+product.description+'</p>'
+   domString +=       '<h6>'+product.price+'</h6>'
    domString +=      '</div>'
+   if (product.soldOut) {
+   		domString += '<div class="sold-out">';
+   		domString +=   '<img src="./images/soldOut.png" alt="Sold Out">'
+   		domString += '</div>'
+   }
    domString +=     '</section>'
-
-   console.log("Dom String from for loop", domString)
-   productContainer.innerHTML += domString;
+   return domString;
 }
 
+function printProductArrayToDom(productArray){
+		for (var i = 0; i < productArray.length; i++){
+
+	  var currentProduct = productArray[i];
+	  var productDomString = buildDomString(currentProduct)
+		productContainer.innerHTML += productDomString;
+	}
+
+}
+printProductArrayToDom(allProducts);
+var selectedCard;
 
 
+document.getElementById("product-container").addEventListener("click", function(event){
+  changeBorder(event);
+  printSelectedDescription();
+})
 
+function changeBorder(event) {
+  if (event.target.classList.contains("title")){
+    selectedCard = event.target.parentNode;
+  } else if (event.target.parentNode.parentNode.classList.contains("product")){
+    selectedCard = event.target.parentNode.parentNode;
+  } else if (event.target.classList.contains("product")) {
+    selectedCard = event.target;
+  }
+  selectedCard.classList.add("border-funsies");
+}
 
-
+function printSelectedDescription () {
+  var description = selectedCard.childNodes[2].childNodes[0].innerHTML;
+  console.log(description);
+}
 
 
 
